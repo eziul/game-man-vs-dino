@@ -4,13 +4,15 @@ const dino = document.querySelector('.dino')
 const start = document.querySelector('.start')
 const gameOver = document.querySelector('.game-over')
 
-audioStart = new Audio('./src/audio/audio_theme.mp3')
-audioGameOver = new Audio('./src/audio/audio_gameover.mp3')
-
+let audioStart = new Audio('./src/audio/audio_theme.mp3')
+let audioGameOver = new Audio('./src/audio/audio_gameover.mp3')
 
 const startGame = () => {
   dino.classList.add('dino-animation')
   start.style.display = 'none'
+
+// Inicia o contador de tempo ao iniciar o jogo
+contadorLoop();
 
   // audio
   audioStart.play()
@@ -36,23 +38,6 @@ const restartGame = () => {
   audioStart.play()
   audioStart.currentTime = 0;
 }
-// const restartGame = () => {
-//   gameOver.style.display = 'none'
-//   dino.style.left = ''
-//   dino.style.right = '0'
-//   hero.src = './img/imagens/hero.png'
-//   hero.style.width = '150px'
-//   hero.style.bottom = '0'
-
-//   start.style.display = 'none'
-
-//   audioGameOver.pause()
-//   audioGameOver.currentTime = 0;
-
-//   audioStart.play()
-//   audioStart.currentTime = 0;
-
-// }
 
 const jump = () => {
   hero.classList.add('jump')
@@ -81,22 +66,21 @@ const loop = () => {
       hero.src = './src/img/game-over.png'
       hero.style.width = '80px'
       hero.style.marginLeft = '50px'
-      
-      
+
       function stopAudioStart() {
         audioStart.pause()
       }
       stopAudioStart()
-      
+
       audioGameOver.play()
-      
+
       function stopAudio() {
         audioGameOver.pause()
       }
       setTimeout(stopAudio, 7000)
-      
+
       gameOver.style.display = 'flex'
-      
+
       clearInterval(intervalId)
     }
   }, 10)
@@ -113,7 +97,7 @@ document.addEventListener('keypress', e => {
 
 document.addEventListener('touchstart', e => {
   if (e.touches.length) {
-    jump() 
+    jump()
   }
 })
 
@@ -121,5 +105,25 @@ document.addEventListener('keypress', e => {
   const tecla = e.key
   if (tecla === 'Enter') {
     startGame()
+    contadorLoop(); // Inicia o contador de tempo ao iniciar o jogo
   }
 })
+
+const TEMPO_LIMITE = 10; // Tempo limite em segundos
+let tempoRestante = TEMPO_LIMITE;
+let contadorTempo; // Variável para armazenar o setInterval
+
+const contadorLoop = () => {
+  // Inicia o contador de tempo
+  contadorTempo = setInterval(() => {
+    tempoRestante--;
+    if (tempoRestante <= 0) {
+      // Tempo acabou, exibe a mensagem de vitória e a bandeira de chegada
+      document.querySelector('.victory-flag').style.display = 'block';
+      document.querySelector('.victory-message').innerText = 'Vitória!!!';
+      clearInterval(intervalId); // Interrompe o loop do jogo
+      clearInterval(contadorTempo); // Interrompe o contador de tempo
+    }
+  }, 1000); // Intervalo de 1 segundo
+}
+
