@@ -63,7 +63,7 @@ const loop = () => {
       hero.classList.remove('jump')
       hero.style.bottom = `${heroPosition}px`
 
-      hero.src = './src/img/game-over.png'
+      hero.src = './img/game-over.png'
       hero.style.width = '80px'
       hero.style.marginLeft = '50px'
 
