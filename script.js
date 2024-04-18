@@ -22,7 +22,7 @@ const restartGame = () => {
   gameOver.style.display = 'none'
   dino.style.left = ''
   dino.style.right = '0'
-  hero.src = './img/hero-lose.png'
+  hero.src = './img/hero.png'
   hero.style.width = '150px'
   hero.style.bottom = '0'
 
@@ -114,8 +114,8 @@ let tempoRestante = TEMPO_LIMITE;
 let contadorTempo; // Variável para armazenar o setInterval
 
 const contadorLoop = () => {
-  // Inicia o contador de tempo
-  contadorTempo = setInterval(() => {
+ // Inicia o contador de tempo
+ contadorTempo = setInterval(() => {
     tempoRestante--;
     if (tempoRestante <= 0) {
       // Tempo acabou, exibe a mensagem de vitória e a bandeira de chegada
@@ -124,6 +124,6 @@ const contadorLoop = () => {
       clearInterval(intervalId); // Interrompe o loop do jogo
       clearInterval(contadorTempo); // Interrompe o contador de tempo
     }
-  }, 1000); // Intervalo de 1 segundo
+ }, 1000); // Intervalo de 1 segundo
 }
 
